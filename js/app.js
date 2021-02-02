@@ -43,17 +43,6 @@ let seattle = {
     }
   },
 
-  // a method (function) calculate random number of customers per hour - completed
-  // a ,method to calculate and populate our number of cookies sold per hour array - completed
-  // a method to render the list items - in progress
-
-  // do something maybe use a for loop - looped
-  //multiply cust number by avg - divided but works
-  //handle the number do some rounding - rounded
-  //push into the cookiessoldperhour array - pushed
-
-
-
   render: function(){
     // do something
     this.calcCookiesSoldEachHour();
