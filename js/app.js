@@ -12,6 +12,8 @@ var limaList = document.getElementById('lima');
 let hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
 let allStores = [];
 
+let footerTotals = [];
+let grandTotal = 0;
 
 
 
@@ -56,7 +58,7 @@ City.prototype.calcCookiesSoldEachHour = function(){
 City.prototype.render = function(){
   this.calcCookiesSoldEachHour();
   const table = document.getElementById('cookie-table');
-  let body = document.createElement('tbody');  //change to thead for header function
+  let body = document.createElement('tbody'); //change to thead for header function
   let tr = document.createElement('tr');
   let td = document.createElement('td');
   td.textContent = this.name; // change line 63 to be empty in header funtion
@@ -67,7 +69,7 @@ City.prototype.render = function(){
     tr.appendChild(td);
   }
   td = document.createElement('td');
-  td.textContent = this.dailyStoreTotal; //change to string that says total 
+  td.textContent = this.dailyStoreTotal; //change to string that says total
   tr.appendChild(td);
   body.appendChild(tr);
   table.appendChild(body);
@@ -85,26 +87,58 @@ let renderHeader = function(){
     td.textContent = hours[i];
     tr.appendChild(td);
   }
-  //td = document.createElement('td');
+  td = document.createElement('td');
   td.textContent = 'Total';
   tr.appendChild(td);
   head.appendChild(tr);
   table.appendChild(head);
 };
 
+let renderFooter = function(){
+  calcFooterTotals();
+  let table = document.getElementById('cookie-table');
+  let foot = document.createElement('tfoot');
+  let tr = document.createElement('tr');
+  let td = document.createElement('td');
+  td.textContent = 'Totals';
+  tr.appendChild(td);
+  for(let i = 0; i<hours.length; i++){
+    td = document.createElement('td');
+    td.textContent = footerTotals[i];
+    tr.appendChild(td);
+  }
+  td = document.createElement('td');
+  td.textContent = grandTotal;
+  tr.appendChild(td);
+  foot.appendChild(tr);
+  table.appendChild(foot);
+};
 
+function calcFooterTotals(){
+  footerTotals = [];
+  grandTotal = 0;
+  for(let i = 0; i<hours.length; i++){
+    let hourTotal = 0;
+    for(let j = 0; j<allStores.length; j++){
+      hourTotal += allStores[j].cookiesSoldEachHour[i];
+    }
+    footerTotals.push(hourTotal);
+    grandTotal += hourTotal;
+  }
+}
 
-let seattle = new City('Seattle', 23, 65, 6.3);
+new City('Seattle', 23, 65, 6.3);
 
-let tokyo = new City('Tokyo', 3, 24, 1.2);
+new City('Tokyo', 3, 24, 1.2);
 
-let dubai = new City('Dubai', 11, 38, 3.7);
+new City('Dubai', 11, 38, 3.7);
 
-let paris = new City('Paris', 20, 38, 2.3);
+new City('Paris', 20, 38, 2.3);
 
-let lima = new City('Lima', 2, 16, 4.6);
+new City('Lima', 2, 16, 4.6);
 
 renderHeader();
+renderFooter();
 // let tokyo = {
 //   name: 'Tokyo',
 //   // min cust per hour
